@@ -25,7 +25,6 @@ class TransactionRequest extends FormRequest
             "rent_date" => "required",
             "return_date" => "required",
             "total" => "required",
-            "status" => "required",
             "user_id" => "required",
             "car_id" => "required",
         ];

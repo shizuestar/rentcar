@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('rent_date');
             $table->date('return_date');
             $table->decimal('total', 10 , 2);
-            $table->enum('status', ['pending', 'paid', 'completed']);
+            $table->enum('status', ['pending','cancel', 'paid', 'completed'])->default('pending');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('car_id')->constrained('cars')->onDelete('cascade');
             $table->timestamps();

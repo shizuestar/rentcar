@@ -7,11 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TransactionsResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -20,8 +15,6 @@ class TransactionsResource extends JsonResource
             "return_date" => $this->return_date,
             "total" => $this->total,
             "status" => $this->status,
-            "user_id" => $this->user_id,
-            "car_id" => $this->car_id,
             'created_at' => date_format($this->created_at, "D, d-m-y"), 
             'updated_at' => date_format($this->updated_at, "D, d-m-y"),
             'user' => $this->whenLoaded('user', function(){

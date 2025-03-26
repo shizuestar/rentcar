@@ -13,7 +13,7 @@ class CarController extends Controller
 {
     public function index()
     {
-        $cars = Car::all();
+        $cars = Car::orderByRaw("CASE WHEN status = 'available' THEN 1 ELSE 2 END")->get();
         return response(CarsResource::collection($cars), 200);
     }
 
@@ -26,10 +26,14 @@ class CarController extends Controller
     {
         try{
             DB::beginTransaction();
-
             $validated = $request->validated();
-            
+
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('cars', 'public'); // Simpan ke folder storage/app/public/cars
+                $validated['image'] = $imagePath;
+            }
             $car = Car::create($validated);
+
             DB::commit();
             return response()->json([
                 'message' => "Succesful Create Car",

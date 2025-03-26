@@ -50,7 +50,11 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $validated = $request->validated();
-            $validated['password'] = Hash::make($validated['password']);
+            if (!empty($validated['password'])) {
+                $validated['password'] = Hash::make($validated['password']);
+            } else {
+                unset($validated['password']);
+            }
 
             $user->update($validated);
             DB::commit();

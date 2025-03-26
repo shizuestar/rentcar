@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 
 Route::middleware(['auth:sanctum'])->group(function(){
@@ -14,6 +15,9 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::patch('/users/{user:id}/update', [UserController::class, 'update']);
     Route::delete('/users/{user:id}/delete', [UserController::class, 'destroy']);
 
+    Route::get('/user/dashboard', [DashboardController::class, 'index'])->middleware('auth:sanctum');
+
+
     Route::get('/cars', [CarController::class, 'index']);
     Route::post('/cars', [CarController::class, 'store']);
     Route::get('/cars/{car:id}', [CarController::class, 'show']);
@@ -21,16 +25,20 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::delete('/cars/{car:id}/delete', [CarController::class, 'destroy']);
 
     Route::get('/transactions', [TransactionController::class, "index"]);
+    Route::get('/user/transactions', [TransactionController::class, "transactionsUser"]);
     Route::post('/transactions', [TransactionController::class, "store"]);
     Route::get('/transactions/{transaction:id}', [TransactionController::class, "show"]);
     Route::post('/transactions/{transaction:id}/pay', [TransactionController::class, "payTransaction"]);
     Route::patch('/transactions/{transaction:id}/completed', [TransactionController::class, "completeTransaction"]);
     Route::patch('/transactions/{transaction:id}/verifyPayment', [TransactionController::class, 'verifyPayment']);
+    Route::get('/transactions/export', [TransactionController::class, 'exportTransactions']);
+    Route::get('/transactions/export/download-pdf', [TransactionController::class, 'downloadTransactionsPDF']);
+    Route::put('/transactions/{id}/cancel', [TransactionController::class, 'cancelTransaction']);
 
     Route::get("/reviews", [ReviewController::class, "index"]);
     Route::post("/cars/{car:id}/review", [ReviewController::class, "store"]);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
-
+Route::get('/checkToken', [AuthController::class, 'checkToken']);
 Route::post('/login', [AuthController::class, 'login']);

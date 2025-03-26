@@ -23,11 +23,11 @@ class CarRequest extends FormRequest
     {
         return [
             "name" => "required|min:4",
-            "type" => "required|min:4",
-            "no_plat" => "required|min:4",
+            "type" => "required|min:1",
+            "no_plat" => "required|min:2",
             "rent_price" => "required|integer",
-            "status" => "required",
-            "image" => "required|string",
+            "status" => "nullable",
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 }

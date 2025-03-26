@@ -21,7 +21,7 @@ class CarsResource extends JsonResource
             'rent_price' => $this->rent_price,
             'no_plat' => $this->no_plat,
             'status' => $this->status,
-            'image' => $this->image,
+            'image' => $this->image ? url('storage/' . $this->image) : null,
             'created_at' => date_format($this->created_at, "D, d-m-y"), 
             'updated_at' => date_format($this->updated_at, "D, d-m-y"), 
         ];

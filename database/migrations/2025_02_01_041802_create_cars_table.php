@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('no_plat', 50)->unique();
             $table->decimal('rent_price', 10,2);
-            $table->enum('status', ['available', 'rented']);
+            $table->enum('status', ['available', 'rented'])->default('available');
             $table->string('image');
             $table->timestamps();
             $table->softDeletes();
